@@ -164,5 +164,3 @@ SIE_X_Means = {t1_Means, t2_Means, I_Means, D_Means, K_Means, M_Means, C_Means, 
 
 save("mats/SIE_X_Means.mat", "SIE_X_Means");
 save("mats/SIE_X_Sensitivities.mat", "SIE_X_Sens");
-
-% Take the magnitude of x1, x2, x3 before taking the mean

@@ -45,8 +45,7 @@ tremor_band = [4, 8] * 10;
 w2 = 2 * pi * frequency_band;
 
 %% Jacobian parameters and variables here
-load('mats/Jacobian.mat', 'J');
-syms q1 q2 q3 q4 q5 q6 q7
+Jacobian;
 
 % LINK LENGTHS
 % - Length upper arm (Lua): 0.2853 m
