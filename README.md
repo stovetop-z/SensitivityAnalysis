@@ -18,42 +18,30 @@ The mat files are already integrated. No changes needed.
 To perform a sensitivity analysis of the tremor propagation model including the 4th submodel (translation of joint displacement to hand position), go to `AIE_X_Sensitivity.m` and 
 `SIE_X_Sensitivity.m`. These take about 5 minutes to run. To plot the data, go to `plot_x.mlx`. 
 
-Files [TO UPDATE]:
+Files:
 ------
-* AIE_Means.mat - Data file for the all input excitation MEAN sensitivity with the 3rd submodel implemented
-* AIE_Plot.m - Function to plot all input excitation sensitivity model with the 3rd submodel
-* AIE_Sensitivities.mat - Data file for the all input excitation sensitivity with the 3rd submodel implemented
-* AIE_X_Senstivities.mat - Data file for the aie sensitivity with the 4th submodel implemented
-* AIE_X_Sensitivity.m - Code to run all input excitation sensitivity calculation with the 4th submodel implemented
-* All_Input_Excitation_Sensitivity.m - Code to run all input excitation sensitivity calculation with the 3rd submodel implemented
-* G.mat - Data file with transfer function of tremor model up to 3rd submodel
-* G_Hist.mat - Data file with comparative data of numerical differentiation vs standard symbolic differentiation calculation of sensitivities
-* Jacobian.mat - Jacobian (3x7 matrix) to implement in tremor model to create the 4th submodel (conversion to hand position in xyz)
-* Parameters.m - Parameters and other useful variable data for sensitivity calculation
-* plot_sensitivities.mlx - Live script to plot the sensitivities
-* plot_x.mlx - Live script to plot the sensitivity data of the 4th submodel
-* SIE_Means.mat - Data file for the single input excitation MEAN sensitivity with the 3rd submodel implemented
-* SIE_Means_Plot.m - Function to plot SIE Mean calculation
-* SIE_Plot.m - Function to plot SIE calculation
-* SIE_Sensitivities.mat - Data file for the SIE sensitivities with the 3rd submodel implemented
-* Single_Input_Excitation_Sensitivity.m - Code to run single input excitation sensitivity calculation with the 3rd submodel
-* SIE_X_Sensitivity.m - Code to run single input excitation sensitivity calculation with the 4th submodel implemented
-* SIE_X_Sensitivities.mat - Data file with single input excitation sensitivity calculations with the 4th submodel
-* SIE_X_Means.mat - Data file with SIE means with 4th submodel
+The main files to be aware of:
+* AIE_X_Sensitivity - This code runs the all input excitation for the 4th and last submodel
+* AIE_Sensitivity - This code runs the aie for the 3rd submodel (joint displacement)
+* Parameters - Holds important parameter information and some useful variables for global use
+* plot_joint_displacement - INCOMPLETE PROJECT to plot the 3rd submodel
+* plot_x - Plots the 4th submodel
+* SIE_Sensitivity - This code runs the single input excitation for the 3rd submodel
+* SIE_X_Sensitivity - This code runs the sie for the 4th submodel
 
 Information for the ignorant:
 -----------------------------
 The `X` indicates the vector x, which represents the 3 dimensions in space. If there is no `X`, then we are using the tremor model that ends in joint displacement. 
-If the `X` is present in the name of a file, then we are using the tremor model that ends in hand position.
+If the `X` is present in the name of a file, then we are using the tremor model that ends in hand position. Change paths and names at your own risk. The files are interconnected
+and require upkeep if you change the name or path in one location. Check the `How to use` above so you have the functions in your matlab path.
 
 These are the link-lengths used for the jacobian for a 50th percentile male (with height of 1.763 m):
-Length upper arm (Lua): 0.2853 m
-Length forearm (Lfa): 0.2723 m
-Length hand: 0.0873 m
-Distance from axis (wrist) to center of mass of hand (Lh): 0.069 m
+- Length upper arm (Lua): 0.2853 m
+- Length forearm (Lfa): 0.2723 m
+- Length hand: 0.0873 m
+- Distance from axis (wrist) to center of mass of hand (Lh): 0.069 m
 
 TODO:
 -----
 * Check posture 1 (with Dr. Charles)
 * Check work with Dr. Charles
-* Update README.md
