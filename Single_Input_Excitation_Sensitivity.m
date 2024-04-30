@@ -127,11 +127,5 @@ toc
 SIE_Sensitivities = {t1_Sensitivity, t2_Sensitivity, I_Sensitivity, D_Sensitivity, K_Sensitivity, M_Sensitivity, C_Sensitivity};
 SIE_Means = {t1_Means, t2_Means, I_Means, D_Means, K_Means, M_Means, C_Means};
 
-save("SIE_Means.mat", "SIE_Means");
-save("SIE_Sensitivities.mat", "SIE_Sensitivities");
-
-% Lua = .2817 m
-% Lfa = .2689 m
-% Lh  = .0681 m
-% Ask Daniel which way does x, y, z point
-% Take the magnitude of x1, x2, x3 before taking the mean
+save("mats/SIE_Means.mat", "SIE_Means");
+save("mats/SIE_Sensitivities.mat", "SIE_Sensitivities");

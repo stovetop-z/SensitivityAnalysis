@@ -129,5 +129,5 @@ toc
 AIE_Sensitivities = {t1_Sensitivity, t2_Sensitivity, I_Sensitivity, D_Sensitivity, K_Sensitivity, M_Sensitivity, C_Sensitivity};
 AIE_Means = {t1_Means, t2_Means, I_Means, D_Means, K_Means, M_Means, C_Means};
 
-save("AIE_Means.mat", "AIE_Means");
-save("AIE_Sensitivities.mat", "AIE_Sensitivities");
+save("mats/AIE_Means.mat", "AIE_Means");
+save("mats/AIE_Sensitivities.mat", "AIE_Sensitivities");

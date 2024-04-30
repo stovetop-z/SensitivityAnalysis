@@ -162,7 +162,7 @@ toc
 SIE_X_Sens = {t1_Sensitivity, t2_Sensitivity, I_Sensitivity, D_Sensitivity, K_Sensitivity, M_Sensitivity, C_Sensitivity, L_Sensitivity};
 SIE_X_Means = {t1_Means, t2_Means, I_Means, D_Means, K_Means, M_Means, C_Means, L_Means};
 
-save("SIE_X_Means.mat", "SIE_X_Means");
-save("SIE_X_Sensitivities.mat", "SIE_X_Sens");
+save("mats/SIE_X_Means.mat", "SIE_X_Means");
+save("mats/SIE_X_Sensitivities.mat", "SIE_X_Sens");
 
 % Take the magnitude of x1, x2, x3 before taking the mean
