@@ -120,6 +120,7 @@ for i=1:length(Matrix)
                 end
             end
             
+            % Get the means for I D K C M L
             switch i
                 case 1
                     I_S = I_Sensitivity{m, tremor_band(1):tremor_band(2)};
