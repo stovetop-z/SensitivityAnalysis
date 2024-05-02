@@ -50,3 +50,6 @@ TODO:
 -----
 * Check posture 1 (with Dr. Charles)
 * Check work with Dr. Charles
+* Email Daniel to meet up and discuss Jacobian
+* Update plots
+* Run for sample of I symmetry -- verify 

@@ -59,7 +59,7 @@ L = [h, f, u];
 % Position variable for posture 1
 % Check: Fundamental Principles of Tremor Propagation in the Upper Limb by
 % Davidson and Charles at Fig 1 for values for different postures
-q = [-pi/2 pi/2 pi/2 pi/2 pi/2 -pi/2 0];
+q = [0 0 0 pi/2 pi/2 0 0];
 J = subs(J, [q1 q2 q3 q4 q5 q6 q7], q);
 
 %% array to hold the values as chars symbolically for plotting
