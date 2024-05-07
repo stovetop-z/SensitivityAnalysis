@@ -48,8 +48,6 @@ These are the link-lengths used for the jacobian for a 50th percentile male (wit
 
 TODO:
 -----
-* Check posture 1 (with Dr. Charles)
-* Check work with Dr. Charles
-* Email Daniel to meet up and discuss Jacobian
+* Email Daniel to meet up and discuss Jacobian - No response yet
 * Update plots
-* Run for sample of I symmetry -- verify 
+* Run for sample of I symmetry -- verify - VERIFIED
