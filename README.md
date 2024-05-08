@@ -16,7 +16,7 @@ the functions, it is imperative that you ensure that they are in the matlab proj
 2. Hover over `Add to path` in the drop down
 3. Click on `Selected Folders`
 
-Repeat the above steps for the RVC2 folder.
+Repeat the above steps for the `RVC2` folder with the modified step #3 to `Selected Folders and Subfolders`.
 
 The mat files are already integrated. No changes needed.
 
