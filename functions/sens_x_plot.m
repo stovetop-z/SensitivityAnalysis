@@ -1,6 +1,7 @@
 function [] = sens_x_plot(sens, t, params_char)
 figure;
-frequency = (1:1:150);
+frequency = (0.1:0.1:15);
+
 
 % Plotting algorithm for a graph of each parameter's flow through 0-15Hz
 for m = 1:length(sens)

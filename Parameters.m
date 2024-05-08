@@ -45,7 +45,7 @@ tremor_band = [4, 8] * 10;
 w2 = 2 * pi * frequency_band;
 
 %% Jacobian parameters and variables here
-Jacobian;
+load("mats/J.mat", "J");
 
 % LINK LENGTHS
 % - Length upper arm (Lua): 0.2853 m
@@ -59,8 +59,11 @@ L = [h, f, u];
 % Position variable for posture 1
 % Check: Fundamental Principles of Tremor Propagation in the Upper Limb by
 % Davidson and Charles at Fig 1 for values for different postures
-q = [-pi/2 pi/2 pi/2 pi/2 pi/2 -pi/2 0];
+syms q1 q2 q3 q4 q5 q6 q7 Lh Lfa Lua
+
+q = [0 0 0 pi/2 pi/2 0 0];
 J = subs(J, [q1 q2 q3 q4 q5 q6 q7], q);
+J = round(J, 6);
 
 %% array to hold the values as chars symbolically for plotting
 t1_char = {'t1'};

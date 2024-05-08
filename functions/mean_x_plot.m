@@ -1,8 +1,9 @@
 function [] = mean_x_plot(x_means, t, params_char)
-sie_means = [];
+means = [];
+
 for s = 1:length(x_means)
     figure;
-    sens = cell2mat(x_means{s});
+    sens = abs(cell2mat(x_means{s}));
 
     % Now, we can create a heatmap
     switch(s)
@@ -25,22 +26,22 @@ for s = 1:length(x_means)
     end
 
     % Plot heat map of means
-    heatmap(pc, "Mean Sensitivity", sens);
-    sie_means = [sie_means; sens.'];
+    heatmap(pc, "Mean Sensitivity", sens, 'Colormap', turbo);
+    means = [means; sens.'];
 end
 
 % Create a table
-sie_table = table(params_char.', sie_means, 'VariableNames', {'Parameters', 'MeanSensitivity'});
+mean_table = table(params_char.', means, 'VariableNames', {'Parameters', 'MeanSensitivity'});
 
 % Sort the table by 'MeanSensitivity' in ascending order
-T = sortrows(sie_table, 'MeanSensitivity');
+T = sortrows(mean_table, 'MeanSensitivity');
 
 % Extract the sorted data
 ParametersSorted = T.Parameters;
 MeanSensitivitySorted = T.MeanSensitivity;
 
 % Create a heatmap plot
-heatmap(1:numel(ParametersSorted), 1, MeanSensitivitySorted', 'XData', ParametersSorted);
+heatmap(1:numel(ParametersSorted), 1, MeanSensitivitySorted', 'XData', ParametersSorted, 'Colormap', turbo);
 
 % Set labels and title
 xlabel('Parameters');

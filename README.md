@@ -16,14 +16,17 @@ the functions, it is imperative that you ensure that they are in the matlab proj
 2. Hover over `Add to path` in the drop down
 3. Click on `Selected Folders`
 
+Repeat the above steps for the RVC2 folder.
+
 The mat files are already integrated. No changes needed.
 
-To perform a sensitivity analysis of the tremor propagation model including the 4th submodel (translation of joint displacement to hand position), go to `AIE_X_Sensitivity.m` 
-and `SIE_X_Sensitivity.m`. These take about 5 minutes to run. To plot the data, go to `plot_x.mlx`. 
+To perform a sensitivity analysis of the tremor propagation model including the 4th submodel (translation of joint displacement to hand position), first run `create_robot_arm.m`. Then, go to `AIE_X_Sensitivity.m` 
+and `SIE_X_Sensitivity.m`. These take about 5 minutes to run. To plot the data, use `plot_x.mlx`. 
 
 Files:
 ------
 The main files to be aware of:
+* create_robot_arm - We utilize R7 robot arm to create jacobian for the 4th submodel
 * AIE_X_Sensitivity - This code runs the all input excitation for the 4th and last submodel
 * AIE_Sensitivity - This code runs the aie for the 3rd submodel (joint displacement)
 * Parameters - Holds important parameter information and some useful variables for global use
@@ -48,6 +51,5 @@ These are the link-lengths used for the jacobian for a 50th percentile male (wit
 
 TODO:
 -----
-* Email Daniel to meet up and discuss Jacobian - No response yet
-* Update plots
-* Run for sample of I symmetry -- verify - VERIFIED
+* Work on paper
+* Verify plots with Dr. Charles
