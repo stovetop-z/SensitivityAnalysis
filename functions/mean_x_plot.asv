@@ -25,7 +25,9 @@ for s = 1:length(x_means)
             pc = params_char(108:110);
     end
 
-    heatmap(pc, "Mean Sensitivity", sens, 'Colormap', turbo);
+    imagesc(pc, "Mean Sensitivity", sens, 'Colormap', turbo);
+    set('XTick', 1:numel(pc), 'XTickLabel', pc);
+    set('YLabel', "Mean Sensitivi")
     means = [means; sens.'];
 end
 
