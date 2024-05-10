@@ -22,5 +22,6 @@ title("Single Input Excitation " + dof_to_muscles(dof_loc, muscle_loc));
 xlabel("Frequency (Hz)");
 ylabel("Sensitivities");
 hold off;
+
 end
 

@@ -23,5 +23,6 @@ title(t);
 xlabel("Frequency (Hz)");
 ylabel("Sensitivities");
 hold off;
+
 end
 

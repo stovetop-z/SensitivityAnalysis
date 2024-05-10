@@ -1,4 +1,4 @@
-function [] = SIE_Means_Plot(Means, dof_loc, params_char, t)
+function [] = mean_plot(Means, dof_loc, params_char, t)
 
 all_means = [];
 for m = 1:size(Means, 2)
@@ -30,7 +30,6 @@ for m = 1:size(Means, 2)
     end
 
         % Plot heat map of means
-    disp(size(means))
     heatmap(pc, "Mean Sensitivity", means, 'Colormap', turbo);
     all_means = [all_means; means.'];
 end
@@ -55,4 +54,5 @@ title(t);
 
 % Adjust the colorbar
 colorbar;
+
 end

@@ -21,5 +21,6 @@ title("All Input Excitation " + dof);
 xlabel("Frequency (Hz)");
 ylabel("Sensitivities");
 hold off;
+
 end
 

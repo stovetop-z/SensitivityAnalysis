@@ -25,13 +25,23 @@ for s = 1:length(x_means)
             pc = params_char(108:110);
     end
 
-    % Plot heat map of means
     heatmap(pc, "Mean Sensitivity", sens, 'Colormap', turbo);
     means = [means; sens.'];
 end
 
 % Create a table
 mean_table = table(params_char.', means, 'VariableNames', {'Parameters', 'MeanSensitivity'});
+
+% Find the parameters less than 0.1
+p = [];
+for val = 1:size(means, 1)
+    par = means(val);
+
+    if par < 0.1
+        p = [p, par];
+    end
+end
+disp (length(p)/110);
 
 % Sort the table by 'MeanSensitivity' in ascending order
 T = sortrows(mean_table, 'MeanSensitivity');
@@ -50,5 +60,6 @@ title(t);
 
 % Adjust the colorbar
 colorbar;
+
 end
 
