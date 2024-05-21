@@ -2,6 +2,8 @@ function [] = sens_x_plot(sens, t, params_char, muscle)
 figure;
 frequency = (0.1:0.1:15);
 
+muscles = {'DELT1', 'DELT2', 'DELT3', 'PECM2', 'BIClong', 'BICshort', 'TRIlong', 'TRIlat', 'BRA', 'BRD', 'PT', 'FCR', 'FCU', 'ECR', 'ECU'};
+
 % If we are using SIE sensitivity
 if muscle > 0
     % Plotting algorithm for a graph of each parameter's flow through 0-15Hz
@@ -36,7 +38,6 @@ else
 end
 
 legend(params_char);
-title(t);
 xlabel("Frequency (Hz)");
 ylabel("Sensitivities");
 hold off;
