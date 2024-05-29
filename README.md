@@ -37,7 +37,7 @@ The main files to be aware of:
 
 Information for the ignorant:
 -----------------------------
-The `X` indicates the vector x, which represents the 3 dimensions in space. If there is no `X`, then we are using the tremor model that ends in joint displacement. 
+The `X` indicates the vector x, which represents the 3 dimensions in space. If there is no `X`, then we are using the tremor model that ends in joint displacement `Q`. 
 If the `X` is present in the name of a file, then we are using the tremor model that ends in hand position. We obtained the first posture (posture 1) that fills in the
 angles (q1-q7) in the jacobian from `Fundamental Principles of Tremor Propagation in the Upper Limb by Andrew D. Davidson and Steven K. Charles`. You can find the angles
 specifically at `Fig. 1`. Change paths and names at your own risk. The files are interconnected and require upkeep if you change the name or path in one location. 
@@ -46,8 +46,9 @@ Check the `How to use` above so you have the functions in your matlab path.
 These are the link-lengths used for the jacobian for a 50th percentile male (with height of 1.763 m):
 - Length upper arm (Lua): 0.2853 m
 - Length forearm (Lfa): 0.2723 m
-- Length hand: 0.0873 m
 - Distance from axis (wrist) to center of mass of hand (Lh): 0.069 m
+
+The following
 
 TODO:
 -----

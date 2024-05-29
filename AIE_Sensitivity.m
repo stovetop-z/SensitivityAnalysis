@@ -43,9 +43,10 @@ for i=1:length(Matrix)
             % plus h
             Xph = matrix;
             Xmh = matrix;
-            h = sqrt(eps) * parameter; % Make h as small as possible to increase accuracy
-            xph = h + parameter;
-            xmh = parameter - h;
+            dp = sqrt(eps) * parameter; % Make h as small as possible to increase accuracy
+            xph = dp + parameter;
+            xmh = parameter - dp;
+            h = 2 * dp;
             Xph(row, col) = xph;
             Xmh(row, col) = xmh;
             

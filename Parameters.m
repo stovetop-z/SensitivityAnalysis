@@ -64,7 +64,6 @@ syms q1 q2 q3 q4 q5 q6 q7 Lh Lfa Lua
 q = [0 0 0 pi/2 pi/2 0 0];
 J = subs(J, [q1 q2 q3 q4 q5 q6 q7], q);
 J = round(J, 6);
-J = sqrt(sum(J.^2, 1));
 
 %% array to hold the values as chars symbolically for plotting
 t1_char = {'t1'};
