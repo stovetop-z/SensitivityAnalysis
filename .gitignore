@@ -1,6 +1,5 @@
 # Data files #
 ##############
-*.mat
 *.fig
 
 # Other #
