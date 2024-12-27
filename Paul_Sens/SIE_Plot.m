@@ -1,6 +1,6 @@
 function [] = SIE_Plot(SIE_Sensitivities, dof_loc, muscle_loc, params_char, dof_to_muscles)
 figure;
-frequency = (0.1:0.1:15);
+frequency = (1:1:150);
 
 % Plotting algorithm for a graph of each parameter's flow through 0-15Hz
 for m = 1:length(SIE_Sensitivities)

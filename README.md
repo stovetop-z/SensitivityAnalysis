@@ -60,7 +60,7 @@ between mine and his (Gs/Gp):
     1.0000    1.0000    1.0000    1.0000   13.3787    0.4414    1.0000    1.0000    1.0000    2.7311    1.0887    0.9883    1.0847    1.0814    0.8244
     1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000
 
-Below is my transfer function:
+Below is my transfer function without any changes to parameters, where frequency is 5 Hz:
     0.0020    0.0056    0.0003    0.0046    0.0590    0.0350    0.0388    0.0357    0.0679    0.0556    0.0228    0.0175    0.0182    0.0344    0.0102
     0.0568    0.1669    0.0091    0.1327    0.0655    0.0209    0.0404    0.0025    0.0048    0.0042    0.0294    0.0626    0.0791    0.0759    0.0110
     0.0387    0.1937    0.0132    0.0871    0.0909    0.0253    0.0766    0.0022    0.0041    0.0114    0.0337    0.3596    0.4437    0.4170    0.0648
@@ -69,7 +69,7 @@ Below is my transfer function:
     0.1893    0.5073    0.0676    0.1171    0.3200    0.0674    0.2503    0.0282    0.0536    0.0616    0.1458    1.9773    2.4654    2.3109    0.3523
     0.0147    0.0280    0.0033    0.0261    0.3582    0.2221    0.2922    0.2783    0.5289    0.4637    0.3244    0.2437    1.4341    1.1388    0.5777
 
-Below is Paul's
+Below is Paul's without any changes to parameters, where frequency is 5 Hz:
     0.0010    0.0003    0.0003    0.0010    0.0703    0.0424    0.0384    0.0357    0.0679    0.0531    0.0130    0.0363    0.0383    0.0497    0.0270
     0.0568    0.1669    0.0091    0.1327    0.0283    0.0341    0.0404    0.0025    0.0048    0.0040    0.0019    0.6705    0.7597    0.7225    0.1429
     0.1747    0.3995    0.0314    0.3649    0.0427    0.0952    0.0715    0.0022    0.0041    0.0038    0.0034    0.0192    0.0443    0.0416    0.0087
@@ -83,3 +83,29 @@ The differences are striking.
 Even after changing Paul's code slightly to calculate the transfer function with his parameter's and it yielded the same results as mine (as expected). This leads
 me to believe there are different operations done for numerical vs symbolic operations in matlab, possibly having to do with taking the inverse of the matrices,
 which is already a complicated algorithm to do numerically.
+
+Problem is in the inversion of the G3 term. This inversion is numerically unstable, resulting in terms that are double, even 3000% of what they should be.
+
+After trying checking for errors, I am sure that I have the correct G3 term symbollically and numerically. When I substitute the values in to the inverted G3 sym matrix, and multiply 
+it by the uninverted matrix, I get (depending on what I put for w2, can be different, but follows same idea of not being identity matrix):
+    1.0000    0.1167    0.0342    0.0000    1.6804    0.7838    5.8214
+    0.0000    2.9246    3.2232    0.0000    0.6461   51.5774    1.3257
+    0.0000    2.1924    2.4716    0.0000    0.7152   26.5719    0.8572
+    0.0000    0.0534    0.0387    1.0000    0.9739    0.4922    3.3130
+    0.0000    0.0000    0.0000    0.0000    0.0296    0.4871    0.0024
+    0.0000    0.3288    0.4454    0.0000    0.1410    3.5551    0.1312
+    0.0000    0.0089    0.0070    0.0000    0.3304    0.0552    1.2023
+
+Which, as you can see above, is not the identity matrix.
+
+When I do the following operations, I get the identity matrix:
+- G3 = sym of the 3rd term
+- Substitute values in for all params except w2
+- Invert
+- Mult G3 by inverted matrix
+- Substitute in w2
+Otherwise, symbolic operations result in what is shown already above. 
+
+I have tested 6 other 7x7 symbolic matrices and have found that they had no issue with inverse calculations. Included in these symbolic matrices are the I, D, and K.
+
+
