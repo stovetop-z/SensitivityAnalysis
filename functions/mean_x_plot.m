@@ -24,6 +24,7 @@ for s = 1:length(AIE_Means)
     end
 
     means = [means; sens.'];
+    means(isnan(means)) = 0;
 end
 
 % Create a table

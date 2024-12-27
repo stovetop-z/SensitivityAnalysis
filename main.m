@@ -134,7 +134,7 @@ for p = 1:length(postures)
                     if (row == 4 && col == 5) || (row == 5 && col == 6) || (row == 5 && col == 7) || (row == 6 && col == 7)
                         continue
                     end
-                    
+
                     if matrix(row, col) == 0
                         for in = 1:size(INPUT, 2)
                             for n = 1:length(w2)
@@ -447,7 +447,9 @@ AIE_D_Means = squeeze(mean(AIE_D_Means));
 AIE_K_Std = squeeze(std(AIE_K_Means));
 AIE_K_Means = squeeze(mean(AIE_K_Means));
 AIE_M_Std = squeeze(std(AIE_M_Means));
+AIE_M_Std(isnan(AIE_M_Std)) = 0;
 AIE_M_Means = squeeze(mean(AIE_M_Means));
+AIE_M_Means(isnan(AIE_M_Means)) = 0;
 AIE_C_Std = squeeze(std(AIE_C_Means));
 AIE_C_Means = squeeze(mean(AIE_C_Means));
 AIE_t1_Std = squeeze(std(AIE_t1_Means));
@@ -461,6 +463,7 @@ AIE_I_Sens = squeeze(mean(AIE_I_Sens));
 AIE_D_Sens = squeeze(mean(AIE_D_Sens));
 AIE_K_Sens = squeeze(mean(AIE_K_Sens));
 AIE_M_Sens = squeeze(mean(AIE_M_Sens));
+AIE_M_Sens(isnan(AIE_M_Sens)) = 0;
 AIE_C_Sens = squeeze(mean(AIE_C_Sens));
 AIE_t1_Sens = squeeze(mean(AIE_t1_Sens));
 AIE_t2_Sens = squeeze(mean(AIE_t2_Sens));
@@ -470,6 +473,7 @@ AIE_I_Matrix = squeeze(mean(AIE_I_Matrix));
 AIE_D_Matrix = squeeze(mean(AIE_D_Matrix));
 AIE_K_Matrix = squeeze(mean(AIE_K_Matrix));
 AIE_M_Matrix = squeeze(mean(AIE_M_Matrix));
+AIE_M_Matrix(isnan(AIE_M_Matrix)) = 0;
 AIE_C_Matrix = squeeze(mean(AIE_C_Matrix));
 AIE_t1_Matrix = squeeze(mean(AIE_t1_Matrix));
 AIE_t2_Matrix = squeeze(mean(AIE_t2_Matrix));
