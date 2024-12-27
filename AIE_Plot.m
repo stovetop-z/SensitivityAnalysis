@@ -74,22 +74,25 @@ end
 %% AIE frequency plot
 f2 = figure;
 frequency = (0.1:0.1:15);
+num = 1;
 % Plotting algorithm for a graph of each parameter's flow through 0-15Hz
 for m = 1:length(AIE_Postures_Sens)
-    matrix_of_matrices = AIE_Postures_Sens{m};
-    for c = 1:size(matrix_of_matrices, 2)
+    
+    if m == 1 || m == 2
+        params = AIE_Postures_Sens{m};
+        plot(frequency, params, 'Color','r');
+        m = 2;
+        params = AIE_Postures_Sens{m};
+        plot(frequency, params, 'Color','#D95319');
+        m = 3;
+    end
 
-        if m == 1 || m == 2
-            params = matrix_of_matrices(:);
-        else
-            params = squeeze(matrix_of_matrices(:, c));
-        end
+    matrix_of_matrices = AIE_Postures_Sens{m};
+
+    for c = 1:size(matrix_of_matrices, 2)
+        params = squeeze(matrix_of_matrices(:, c));
 
         switch(m)
-            case 1
-                plot(frequency, params, 'Color','r');
-            case 2
-                plot(frequency, params, 'Color','#D95319');
             case 3
                 plot(frequency, params, 'Color','g');
             case 4
@@ -103,8 +106,9 @@ for m = 1:length(AIE_Postures_Sens)
             case 8
                 plot(frequency, params, 'Color','#7E2F8E');
         end
-
+        num = num + 1;
     end
+    disp(num);
     hold on;
 end
 xlabel("Frequency (Hz)");
@@ -173,6 +177,7 @@ heatmap(t1_P_Matrix, 'Title', 'T1', 'Colormap', turbo);
 nexttile(t);
 heatmap(t2_P_Matrix, 'Title', 'T2', 'Colormap', turbo);
 nexttile(t);
+
 I_P_Matrix{1}(isnan(I_P_Matrix{1})) = 0;
 heatmap(I_P_Matrix{1}, 'Title', 'I Posture 1', 'Colormap', turbo);
 nexttile(t);
@@ -194,12 +199,15 @@ nexttile(t);
 I_P_Matrix{7}(isnan(I_P_Matrix{7})) = 0;
 heatmap(I_P_Matrix{7}, 'Title', 'I Posture 7', 'Colormap', turbo);
 nexttile(t);
+
 D_P_Matrix(isnan(D_P_Matrix)) = 0;
 heatmap(D_P_Matrix, 'Title', 'D', 'Colormap', turbo);
 nexttile(t);
+
 K_P_Matrix(isnan(K_P_Matrix)) = 0;
 heatmap(K_P_Matrix, 'Title', 'K', 'Colormap', turbo);
 nexttile(t);
+
 M_P_Matrix{1}(isnan(M_P_Matrix{1})) = 0;
 heatmap(M_P_Matrix{1}, 'Title', 'M Posture 1', 'Colormap', turbo);
 nexttile(t);
@@ -221,7 +229,9 @@ nexttile(t);
 M_P_Matrix{7}(isnan(M_P_Matrix{7})) = 0;
 heatmap(M_P_Matrix{7}, 'Title', 'M Posture 7', 'Colormap', turbo);
 nexttile(t);
+
 C_P_Matrix(isnan(C_P_Matrix)) = 0;
 heatmap(C_P_Matrix, 'Title', 'C', 'Colormap', turbo);
 nexttile(t);
+
 heatmap(L_P_Matrix, 'Title', 'Link-Lengths', 'Colormap', turbo);
