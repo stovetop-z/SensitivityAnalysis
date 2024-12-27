@@ -1,6 +1,4 @@
 function [] = AIE_Sensitivity_Analysis(I_pos, D, K, C, M_pos, t1, t2, L, j_sym, j_p, INPUT, w2, posture)
-
-addpath("functions/");
 % Load all the matrices that have the parameters of interest
 Matrix = {I_pos, D, K, C, M_pos, t1, t2, L};
 
@@ -48,30 +46,31 @@ L_Mean_Matrix = zeros(3, input_length, 40, L_params);
 % This index will point to which parameter we are on in each matrix
 p = 1;
 
-% counts for t1 and t2 so that we only iterate over them once
+% Counts for t1 and t2 so that we only iterate over them once
 t1_count = 0;
 t2_count = 0;
 
 %% Multiparameter sensitivity
 for i=1:length(Matrix)
-    for j=1:size(Matrix{i},1)
-        for k=1:size(Matrix{i},2)
-            % Set the current matrix
-            matrix = Matrix{i};
+    % Set the current matrix
+    matrix = Matrix{i};
 
+    for j=1:size(matrix, 1) % Row
+        for k=1:size(matrix, 2) % Column
             % Set up key variables such as the row and column of the matrix
             row = j;
             col = k;
 
-            % Check first if the inue is a zero value for all matrices
+            % Check first if the parameter is a zero value for all matrices
             % except the I matrix, since we are computing some zero
-            % parameters.
+            % parameters in I that are significant depending on posture.
             if matrix(row, col) == 0 && i ~= 1
                 continue
             end
             
             % Now let's check if we are going on the left side of the I, D,
-            % and K. If we are, let's skip.
+            % and K. If we are, let's skip since we assume these are symmetric
+            % matrices.
             if (i == 1 || i == 2 || i == 3) && row > col
                 continue
             end
@@ -86,21 +85,19 @@ for i=1:length(Matrix)
                 end
             end
 
-             % The parameter of interest is going to be set to the current
+            % The parameter of interest is going to be set to the current
             % row and column of the matrix
             parameter = matrix(row, col);
 
-            % Now we are going to create our forward increment for the
-            % forward numerical differentiation where Xph = the matrix with the parameter(x)
-            % plus h
-            Xph = matrix;
-            Xmh = matrix;
-            dp = delta * parameter; % Make h as small as possible to increase accuracy with machine epsilon as delta
-            xph = parameter + dp;
-            xmh = parameter - dp;
-            h = dp * 2;
-            Xph(row, col) = xph;
-            Xmh(row, col) = xmh;
+            % Make x plus and minus dx for secant differentiation. Where
+            X_plus_dx = matrix;
+            X_min_dx = matrix;
+            dx = delta * parameter; % Make dx as small as possible to increase accuracy with machine epsilon as delta
+            x_plus_dx = parameter + dx;
+            x_min_dx = parameter - dx;
+            h = dx * 2; % Secant differentiation requries h to be multiplied by 2
+            X_plus_dx(row, col) = x_plus_dx;
+            X_min_dx(row, col) = x_min_dx;
             
             for in = 1:size(INPUT, 2)
                 input = INPUT(in, :);
@@ -109,9 +106,9 @@ for i=1:length(Matrix)
                     w = w2(n);
 
                     if i == 1 % We are at I
-                        Xph(col, row) = xph;
-                        Xmh(col, row) = xmh;
-                        I_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, Xph, D, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, Xmh, D, K, M_pos, t1, t2, C, input, w)), 2))./h;
+                        X_plus_dx(col, row) = x_plus_dx;
+                        X_min_dx(col, row) = x_min_dx;
+                        I_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, X_plus_dx, D, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, X_min_dx, D, K, M_pos, t1, t2, C, input, w)), 2))./h;
                         
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             I_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = I_Sensitivity_3x1(:, in, n, p);
@@ -121,9 +118,9 @@ for i=1:length(Matrix)
                     end
         
                     if i == 2 % We are at D
-                        Xph(col, row) = xph;
-                        Xmh(col, row) = xmh;
-                        D_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, Xph, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, Xmh, K, M_pos, t1, t2, C, input, w)), 2))./h;    
+                        X_plus_dx(col, row) = x_plus_dx;
+                        X_min_dx(col, row) = x_min_dx;
+                        D_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, X_plus_dx, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, X_min_dx, K, M_pos, t1, t2, C, input, w)), 2))./h;    
     
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             D_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = D_Sensitivity_3x1(:, in, n, p);
@@ -133,9 +130,9 @@ for i=1:length(Matrix)
                     end
     
                     if i == 3 % We are at K
-                        Xph(col, row) = xph;
-                        Xmh(col, row) = xmh;
-                        K_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, Xph, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, Xmh, M_pos, t1, t2, C, input, w)), 2))./h;                
+                        X_plus_dx(col, row) = x_plus_dx;
+                        X_min_dx(col, row) = x_min_dx;
+                        K_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, X_plus_dx, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, X_min_dx, M_pos, t1, t2, C, input, w)), 2))./h;                
     
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             K_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = K_Sensitivity_3x1(:, in, n, p);
@@ -145,7 +142,7 @@ for i=1:length(Matrix)
                     end
         
                     if i == 4 % We are at C
-                        C_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, K, M_pos, t1, t2, Xph, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, K, M_pos, t1, t2, Xmh, input, w)), 2))./h;
+                        C_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, K, M_pos, t1, t2, X_plus_dx, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, K, M_pos, t1, t2, X_min_dx, input, w)), 2))./h;
     
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             C_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = C_Sensitivity_3x1(:, in, n, p);
@@ -155,7 +152,7 @@ for i=1:length(Matrix)
                     end
         
                     if i == 5 % We are at M
-                        M_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, K, Xph, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, K, Xmh, t1, t2, C, input, w)), 2))./h;
+                        M_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx(j_p, I_pos, D, K, X_plus_dx, t1, t2, C, input, w)), 2) - sum(abs(Gx(j_p, I_pos, D, K, X_min_dx, t1, t2, C, input, w)), 2))./h;
     
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             M_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = M_Sensitivity_3x1(:, in, n, p);
@@ -193,7 +190,7 @@ for i=1:length(Matrix)
                     end
     
                     if i == 8 % We are at L
-                        L_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx_L(j_sym, Xph, I_pos, D, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx_L(j_sym, Xmh, I_pos, D, K, M_pos, t1, t2, C, input, w)), 2))./h;    
+                        L_Sensitivity_3x1(:, in, n, p) = (sum(abs(Gx_L(j_sym, X_plus_dx, I_pos, D, K, M_pos, t1, t2, C, input, w)), 2) - sum(abs(Gx_L(j_sym, X_min_dx, I_pos, D, K, M_pos, t1, t2, C, input, w)), 2))./h;    
 
                         if n >= tremor_band(1) && n <= tremor_band(2)
                             L_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = L_Sensitivity_3x1(:, in, n, p);

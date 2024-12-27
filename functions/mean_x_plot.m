@@ -20,7 +20,7 @@ for s = 1:length(AIE_Means)
         case 7
             pc = params_char(93:107);
         case 8
-            pc = params_char(108:110);
+            pc = params_char(108:120);
     end
 
     means = [means; sens.'];

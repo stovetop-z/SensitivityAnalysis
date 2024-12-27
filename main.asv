@@ -134,20 +134,6 @@ for p = 1:length(postures)
                     if (row == 4 && col == 5) || (row == 5 && col == 6) || (row == 5 && col == 7) || (row == 6 && col == 7)
                         continue
                     end
-                    
-                    if matrix(row, col) == 0
-                        for in = 1:size(INPUT, 2)
-                            for n = 1:length(w2)
-                                if n >= tremor_band(1) && n <= tremor_band(2)
-                                    I_Mean_Matrix(:, in, n - tremor_band(1) + 1, p) = 0;
-                                end
-
-                                I_Sensitivity_3x1(:, in, n, p) = 0;
-                            end
-                        end
-
-                        continue
-                    end
                 end
     
                 % The parameter of interest is going to be set to the current
