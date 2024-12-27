@@ -1,5 +1,6 @@
 function [] = AIE_Sensitivity_Analysis(I_pos, D, K, C, M_pos, t1, t2, L, j_sym, j_p, INPUT, w2, posture)
 
+addpath("functions/");
 % Load all the matrices that have the parameters of interest
 Matrix = {I_pos, D, K, C, M_pos, t1, t2, L};
 
@@ -52,7 +53,6 @@ t1_count = 0;
 t2_count = 0;
 
 %% Multiparameter sensitivity
-tic
 for i=1:length(Matrix)
     for j=1:size(Matrix{i},1)
         for k=1:size(Matrix{i},2)
@@ -282,7 +282,6 @@ t2_Param_Matrix = squeeze(squeeze(mean(mean(t2_Means_Matrix, 2), 3)));
 L_Sensitivity_1x1 = squeeze(squeeze(mean(L_Sensitivity_1x1, 2)));
 L_Means = mean(L_Sensitivity_1x1(40:80, :));
 L_Param_Matrix = squeeze(squeeze(mean(mean(L_Means_Matrix, 2), 3)));
-toc
 
 %% Combine all sensitivities real quick
 AIE_Sens = {t1_Sensitivity_1x1, t2_Sensitivity_1x1, I_Sensitivity_1x1, D_Sensitivity_1x1, K_Sensitivity_1x1, M_Sensitivity_1x1, C_Sensitivity_1x1, L_Sensitivity_1x1};

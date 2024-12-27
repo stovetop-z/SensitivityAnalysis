@@ -8,7 +8,6 @@
 clear;
 clear all;
 
-
 %% Amplitude and theta inputs
 A = rand(100, 15, 1, 1);
 theta = rand(100, 15, 1, 1) * 2 * pi;

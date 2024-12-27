@@ -1,7 +1,6 @@
 clear; 
 clear all;
 
-addpath("functions/");
 Parameters;
 %% Load Sensitivities
 load("mats/AIE_Postures_Means.mat", "AIE_Postures_Means");
@@ -11,6 +10,7 @@ load("mats/AIE_Postures_Stds.mat", "AIE_Postures_Stds");
 
 muscles = {'DELT1', 'DELT2', 'DELT3', 'PECM2', 'BIClong', 'BICshort', 'TRIlong', 'TRIlat', 'BRA', 'BRD', 'PT', 'FCR', 'FCU', 'ECR', 'ECU'};
 ms = {1, muscles{1}; 2, muscles{2}; 3, muscles{3}; 4, muscles{4}; 5, muscles{5}; 6, muscles{6}; 7, muscles{7}; 8, muscles{8}; 9, muscles{9}; 10, muscles{10}; 11, muscles{11}; 12, muscles{12}; 13, muscles{13}; 14, muscles{14}; 15, muscles{15}};
+
 %% Means
 poses = ["Posture_1" "Posture_2" "Posture_3" "Posture_4" "Posture_5" "Posture_6" "Posture_7"];
 postures = [1 2 3 4 5 6 7];
