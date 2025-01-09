@@ -74,23 +74,26 @@ end
 %% AIE frequency plot
 f2 = figure;
 frequency = (0.1:0.1:15);
-num = 1;
+
+m = 1;
 % Plotting algorithm for a graph of each parameter's flow through 0-15Hz
-for m = 1:length(AIE_Postures_Sens)
+while m <= length(AIE_Postures_Sens)
     
-    if m == 1 || m == 2
+    if m == 1
         params = AIE_Postures_Sens{m};
         plot(frequency, params, 'Color','r');
+        hold on;
         m = 2;
         params = AIE_Postures_Sens{m};
         plot(frequency, params, 'Color','#D95319');
         m = 3;
+        hold on;
     end
 
     matrix_of_matrices = AIE_Postures_Sens{m};
 
     for c = 1:size(matrix_of_matrices, 2)
-        params = squeeze(matrix_of_matrices(:, c));
+        params = squeeze(matrix_of_matrices(:, c))';
 
         switch(m)
             case 3
@@ -106,10 +109,9 @@ for m = 1:length(AIE_Postures_Sens)
             case 8
                 plot(frequency, params, 'Color','#7E2F8E');
         end
-        num = num + 1;
+        hold on;
     end
-    disp(num);
-    hold on;
+    m = m + 1;
 end
 xlabel("Frequency (Hz)");
 ylabel("Sensitivities");
